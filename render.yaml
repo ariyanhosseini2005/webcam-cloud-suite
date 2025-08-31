@@ -1,0 +1,23 @@
+
+services:
+  - type: web
+    name: webcam-dashboard
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn -b 0.0.0.0:10000 app:app"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        value: change-me
+      - key: DEVICE_TOKENS
+        value: phone1:token-123, phone2:token-456
+      - key: STORAGE_DIR
+        value: /data/uploads
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
